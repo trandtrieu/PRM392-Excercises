@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="InformationTextView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">8dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/colorAccent</item>
+    </style>
+
+    <style name="CodeFont" parent="@android:style/TextAppearance.Medium">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:typeface">monospace</item>
+    </style>
+
+    <style name="LoginInformationTextView">
+
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">50sp</item>
+        <item name="android:layout_marginStart">50dp</item>
+        <item name="android:layout_marginTop">50dp</item>
+
+        <item name="android:layout_marginEnd">50dp</item>
+        <item name="android:layout_marginBottom">50dp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:fontFamily">@font/librebaskerville_regular</item>
+    </style>
+
+</resources>

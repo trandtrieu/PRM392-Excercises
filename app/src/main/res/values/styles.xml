@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="aaaa">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_below">@id/loginbtn</item>
+        <item name="android:layout_alignParentEnd">true</item>
+        <item name="android:layout_margin">20dp</item>
+        <item name="android:layout_marginStart">20dp</item>
+        <item name="android:layout_marginTop">33dp</item>
+        <item name="android:layout_marginEnd">142dp</item>
+        <item name="android:layout_marginBottom">20dp</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+</resources>

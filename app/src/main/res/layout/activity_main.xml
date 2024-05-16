@@ -9,68 +9,38 @@
 
     <TextView
         android:id="@+id/signin"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginEnd="50dp"
-        android:layout_marginBottom="50dp"
-        android:fontFamily="@font/librebaskerville_italic"
-        android:gravity="center"
-        android:text="@string/sign_in"
-        android:textColor="@color/white"
-        android:textSize="39sp" />
+        style="@style/InstagramInputTextView"
+        android:text="@string/sign_in" />
 
+    <!-- Your layout XML file -->
     <EditText
         android:id="@+id/username"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/AppEditText"
         android:layout_below="@id/signin"
-        android:layout_margin="10dp"
-        android:background="@drawable/rounded_corner"
-        android:drawablePadding="20dp"
-        android:hint="@string/username"
-        android:padding="20dp"
-        android:textColorHint="@color/white" />
+        android:hint="@string/username" />
 
     <EditText
         android:id="@+id/password"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/AppEditText"
         android:layout_below="@id/username"
-        android:layout_margin="10dp"
-        android:background="@drawable/rounded_corner"
-        android:drawablePadding="20dp"
-        android:hint="Password"
-        android:inputType="textPassword"
-        android:padding="20dp"
-        android:textColorHint="@color/white" />
+        android:hint="@string/password"
+        android:inputType="textPassword" />
 
     <Button
         android:id="@+id/loginbtn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/AppButton"
         android:layout_below="@id/forgotpass"
-        android:layout_centerHorizontal="true"
-        android:layout_margin="20dp"
-        android:backgroundTint="@color/black"
         android:text="@string/log_in" />
-
 
     <TextView
         android:id="@+id/forgotpass"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/AppTextView"
         android:layout_below="@id/password"
         android:layout_alignParentEnd="true"
         android:layout_margin="10dp"
-
-        android:text="@string/forgot_password"
-        android:textColor="@color/white" />
-
+        android:text="@string/forgot_password" />
 
     <LinearLayout
-
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/loginbtn"
@@ -87,11 +57,8 @@
 
         <TextView
             android:id="@+id/login_or"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/log_in"
-            android:textColor="@color/white"
-            android:textSize="17sp" />
+            style="@style/AppTextView"
+            android:text="@string/or" />
 
         <View
             android:layout_width="0dp"
@@ -100,20 +67,14 @@
             android:layout_marginEnd="20dp"
             android:layout_weight="1"
             android:background="@color/white" />
-
     </LinearLayout>
 
     <TextView
         android:id="@+id/loginWith"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/AppTextView.Centered"
         android:layout_below="@id/loginbtn"
-        android:layout_centerHorizontal="true"
         android:layout_margin="35dp"
-        android:text="@string/log_in_with"
-        android:textColor="@color/white"
-        android:textSize="17sp" />
-
+        android:text="@string/log_in_with" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -123,23 +84,18 @@
         android:gravity="center"
         android:orientation="horizontal">
 
-
         <TextView
             android:id="@+id/donthaveaccount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/dont_have_account"
-            android:textColor="@color/white"
-            android:textSize="17sp" />
+            style="@style/AppTextView"
+            android:text="@string/dont_have_account" />
 
         <Button
             android:id="@+id/signUp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
-            android:backgroundTint="@color/white"
             android:onClick="signUpOnClick"
-            android:text="Sign up"
+            android:text="@string/signup"
             android:textAllCaps="false"
             android:textColor="#1A73E8"
             android:textSize="17sp" />

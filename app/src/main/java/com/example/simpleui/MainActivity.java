@@ -1,10 +1,7 @@
 package com.example.simpleui;
 
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
+import android.util.Log;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,35 +10,49 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 public class MainActivity extends AppCompatActivity {
-    public Button myButton;
-    public EditText myUser;
-    public EditText myPass;
-
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
-
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main),
-                (v, insets) -> {
-                    Insets systemBars =
-                            insets.getInsets(WindowInsetsCompat.Type.systemBars());
-                    v.setPadding(systemBars.left, systemBars.top,
-                            systemBars.right, systemBars.bottom);
-                    return insets;
-                });
-        myButton = findViewById(R.id.btnOk);
-        myUser = findViewById(R.id.editUser);
-        myPass = findViewById(R.id.editPassword);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main
+        ), (v, insets) -> {
+            Insets systemBars =
+                    insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top,
+                    systemBars.right, systemBars.bottom);
+            return insets;
+        });
+        Log.i("MainActivity", "State: Created");
     }
 
-    public void onLogin(View view) {
-        if (myUser.getText().toString().equals("admin") &&
-                myPass.getText().toString().equals("12345")) {
-            Toast.makeText(getApplicationContext(), "Loginsuccessful", Toast.LENGTH_SHORT).show();
-        } else {
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.i("MainActivity", "State: Started");
+    }
 
-            Toast.makeText(getApplicationContext(), "Login failed", Toast.LENGTH_SHORT).show();
-        }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.i("MainActivity", "State: Resumed");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.i("MainActivity", "State: Paused");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.i("MainActivity", "State: Stopped");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.i("MainActivity", "State: Destroyed");
     }
 }

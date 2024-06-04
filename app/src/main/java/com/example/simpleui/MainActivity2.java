@@ -10,13 +10,16 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 public class MainActivity2 extends AppCompatActivity {
-    public TextView tvShow;
+    private TextView textViewId;
+    private TextView textViewName;
+    private TextView textViewDescription;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main2);
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main
         ), (v, insets) -> {
             Insets systemBars =
@@ -25,10 +28,16 @@ public class MainActivity2 extends AppCompatActivity {
                     systemBars.right, systemBars.bottom);
             return insets;
         });
-        tvShow = findViewById(R.id.tvShow);
-        if (getIntent() != null) {
-            String data = getIntent().getStringExtra("MESSAGE");
-            tvShow.setText("Hello " + data);
-        }
+        textViewId = findViewById(R.id.textViewDetailId);
+        textViewName = findViewById(R.id.textViewDetailName);
+        textViewDescription =
+                findViewById(R.id.textViewDetailDescription);
+        int id = getIntent().getIntExtra("id", -1);
+        String name = getIntent().getStringExtra("name");
+        String description =
+                getIntent().getStringExtra("description");
+        textViewId.setText(String.valueOf(id));
+        textViewName.setText(name);
+        textViewDescription.setText(description);
     }
 }

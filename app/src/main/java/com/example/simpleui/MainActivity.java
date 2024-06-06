@@ -1,26 +1,26 @@
 package com.example.simpleui;
 
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.content.pm.PackageManager;
-import android.os.Build;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    private static final int NOTIFICATION_ID = 1;
-    private static final String CHANNEL_ID =
-            "notification_channel";
+    private DBHandler dbHandler;
+    private CourseAdapter courseAdapter;
+    private List<Course> courseList;
+    private RecyclerView recyclerView;
+    private Button buttonAdd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,66 +28,76 @@ public class MainActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main
-        ), (v, insets) -> {
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v,
+                                                                            insets) -> {
+
             Insets systemBars =
                     insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top,
                     systemBars.right, systemBars.bottom);
             return insets;
         });
+        // Get data
+        dbHandler = new DBHandler(this);
+        courseList = dbHandler.getAllCourses();
+        recyclerView = findViewById(R.id.recycler_view);
+        buttonAdd = findViewById(R.id.button_add);
+        // Set the LayoutManager to recyclerView
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        //Create NotificationChannel()
-        createNotificationChannel();
-        //Show Notification
-        Button button = findViewById(R.id.button);
-        button.setOnClickListener(new View.OnClickListener() {
+// Set data to Adapter
+        courseAdapter = new CourseAdapter(courseList);
+        // Set the Adapter to RecyclerView
+        recyclerView.setAdapter(courseAdapter);
+// Add a Listener to RecyclerView Adapter
+        courseAdapter.setOnItemClickListener(new
+                                                     CourseAdapter.OnItemClickListener() {
+                                                         // Click an item
+                                                         @Override
+                                                         public void onItemClick(int position) {
+                                                             Intent intent = new Intent(MainActivity.this,
+                                                                     UpdateCourseActivity.class);
+                                                             intent.putExtra("course_id",
+                                                                     courseList.get(position).getId());
+                                                             startActivity(intent);
+                                                         }
+
+                                                         // Click Edit button
+                                                         @Override
+                                                         public void onEditClick(int position) {
+                                                             Intent intent = new Intent(MainActivity.this,
+                                                                     UpdateCourseActivity.class);
+                                                             intent.putExtra("course_id",
+                                                                     courseList.get(position).getId());
+                                                             startActivity(intent);
+                                                         }
+
+                                                         // Click Delete button
+                                                         @Override
+                                                         public void onDeleteClick(int position) {
+                                                             dbHandler.deleteCourse(courseList.get(position));
+                                                             courseList.remove(position);
+                                                             courseAdapter.notifyItemRemoved(position);
+                                                         }
+
+                                                     });
+        // Add a Listener to Add button
+        buttonAdd.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                addNotification();
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this,
+                        AddCourseActivity.class);
+                startActivity(intent);
             }
         });
     }
 
-    //NotificationChannel
-    private void createNotificationChannel() {
-        //Version >= Android 26 -> Create NotificationChannel
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            //NotificationChannel
-            CharSequence name = "Notification";
-            String description = "Android Notification";
-            int importance =
-                    NotificationManager.IMPORTANCE_DEFAULT;
-            NotificationChannel channel = new
-                    NotificationChannel(CHANNEL_ID, name, importance);
-            channel.setDescription(description);
-            //Create NotificationChannel
-            NotificationManager notificationManager =
-                    getSystemService(NotificationManager.class);
-
-            notificationManager.createNotificationChannel(channel);
-        }
-    }
-
-    private void addNotification() {
-        //Notification with a channel
-        NotificationCompat.Builder builder = new
-                NotificationCompat.Builder(this, CHANNEL_ID)
-                .setSmallIcon(R.drawable.messi)
-
-                .setContentTitle("Notification Alert")
-                .setContentText("Hi, This is Android Notification Detail!.")
-                .setPriority(NotificationCompat.PRIORITY_HIGH);
-        //Show Notification
-        NotificationManagerCompat notificationManager =
-
-                NotificationManagerCompat.from(this);
-        if (ActivityCompat.checkSelfPermission(this,
-                android.Manifest.permission.POST_NOTIFICATIONS) !=
-                PackageManager.PERMISSION_GRANTED) {
-            return;
-        }
-        notificationManager.notify(NOTIFICATION_ID,
-                builder.build());
+    // Refresh data
+    @Override
+    protected void onResume() {
+        super.onResume();
+        courseList.clear();
+        courseList.addAll(dbHandler.getAllCourses());
+        courseAdapter.notifyDataSetChanged();
     }
 }

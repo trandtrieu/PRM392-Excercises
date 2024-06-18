@@ -43,7 +43,10 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.3.0")
     implementation("com.squareup.picasso:picasso:2.71828")
     implementation("androidx.recyclerview:recyclerview:1.2.1")
-
+    implementation("androidx.recyclerview:recyclerview:1.2.1")
+    val room_version = "2.5.0"
+    implementation("androidx.room:room-runtime:$room_version")
+    annotationProcessor("androidx.room:room-compiler:$room_version")
 }
 
 

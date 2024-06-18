@@ -5,25 +5,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".FileActivity">
 
     <EditText
-        android:id="@+id/editTextName"
+        android:id="@+id/editTextName1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="3dp"
-        android:ems="10"
-        android:hint="Name"
-        android:inputType="text" />
+        android:hint="Name" />
 
     <EditText
-        android:id="@+id/editTextEmail"
+        android:id="@+id/editTextEmail1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="3dp"
-        android:ems="10"
-        android:hint="Email"
-        android:inputType="textEmailAddress" />
+        android:layout_marginTop="16dp"
+        android:hint="Email" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -31,16 +26,17 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/buttonSave"
+            android:id="@+id/buttonSave1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="2dp"
             android:layout_weight="1"
+
             android:onClick="onSave"
             android:text="Save" />
 
         <Button
-            android:id="@+id/buttonLoad"
+            android:id="@+id/buttonLoad1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="2dp"
@@ -50,7 +46,7 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/textViewResult"
+        android:id="@+id/textViewResult1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"

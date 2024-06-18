@@ -1,26 +1,27 @@
 package com.example.simpleui;
 
-import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    private DBHandler dbHandler;
-    private CourseAdapter courseAdapter;
-    private List<Course> courseList;
-    private RecyclerView recyclerView;
-    private Button buttonAdd;
+    private static final String SHARED_PREFS = "sharedPrefs";
+    private static final String NAME_KEY = "name";
+    private static final String EMAIL_KEY = "email";
+    EditText editTextName;
+    EditText editTextEmail;
+    private Button buttonSave;
+    private Button buttonLoad;
+    private TextView textViewResult;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,74 +31,36 @@ public class MainActivity extends AppCompatActivity {
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v,
                                                                             insets) -> {
-
             Insets systemBars =
                     insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top,
                     systemBars.right, systemBars.bottom);
             return insets;
         });
-        // Get data
-        dbHandler = new DBHandler(this);
-        courseList = dbHandler.getAllCourses();
-        recyclerView = findViewById(R.id.recycler_view);
-        buttonAdd = findViewById(R.id.button_add);
-        // Set the LayoutManager to recyclerView
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-// Set data to Adapter
-        courseAdapter = new CourseAdapter(courseList);
-        // Set the Adapter to RecyclerView
-        recyclerView.setAdapter(courseAdapter);
-// Add a Listener to RecyclerView Adapter
-        courseAdapter.setOnItemClickListener(new
-                                                     CourseAdapter.OnItemClickListener() {
-                                                         // Click an item
-                                                         @Override
-                                                         public void onItemClick(int position) {
-                                                             Intent intent = new Intent(MainActivity.this,
-                                                                     UpdateCourseActivity.class);
-                                                             intent.putExtra("course_id",
-                                                                     courseList.get(position).getId());
-                                                             startActivity(intent);
-                                                         }
-
-                                                         // Click Edit button
-                                                         @Override
-                                                         public void onEditClick(int position) {
-                                                             Intent intent = new Intent(MainActivity.this,
-                                                                     UpdateCourseActivity.class);
-                                                             intent.putExtra("course_id",
-                                                                     courseList.get(position).getId());
-                                                             startActivity(intent);
-                                                         }
-
-                                                         // Click Delete button
-                                                         @Override
-                                                         public void onDeleteClick(int position) {
-                                                             dbHandler.deleteCourse(courseList.get(position));
-                                                             courseList.remove(position);
-                                                             courseAdapter.notifyItemRemoved(position);
-                                                         }
-
-                                                     });
-        // Add a Listener to Add button
-        buttonAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this,
-                        AddCourseActivity.class);
-                startActivity(intent);
-            }
-        });
+        editTextName = findViewById(R.id.editTextName);
+        editTextEmail = findViewById(R.id.editTextEmail);
+        buttonSave = findViewById(R.id.buttonSave);
+        buttonLoad = findViewById(R.id.buttonLoad);
+        textViewResult = findViewById(R.id.textViewResult);
     }
 
-    // Refresh data
-    @Override
-    protected void onResume() {
-        super.onResume();
-        courseList.clear();
-        courseList.addAll(dbHandler.getAllCourses());
-        courseAdapter.notifyDataSetChanged();
+    // Save name and email to Shared Preferences
+    public void onSave(View view) {
+        SharedPreferences sharedPreferences =
+                getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(NAME_KEY, editTextName.getText().toString());
+        editor.putString(EMAIL_KEY,
+                editTextEmail.getText().toString());
+        editor.apply();
+    }
+
+    // Get name and email from Shared Preferences
+    public void onLoad(View view) {
+        SharedPreferences sharedPreferences =
+                getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        String name = sharedPreferences.getString(NAME_KEY, "");
+        String email = sharedPreferences.getString(EMAIL_KEY, "");
+        textViewResult.setText("Name: " + name + "\nEmail: " + email);
     }
 }

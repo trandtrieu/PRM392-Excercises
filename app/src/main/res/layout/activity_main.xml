@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
@@ -8,51 +9,33 @@
     tools:context=".MainActivity">
 
     <EditText
-        android:id="@+id/editTextName"
+        android:id="@+id/nameEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="3dp"
-        android:ems="10"
-        android:hint="Name"
-        android:inputType="text" />
+        android:hint="Name" />
 
     <EditText
-        android:id="@+id/editTextEmail"
+
+        android:id="@+id/phoneEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="3dp"
-        android:ems="10"
-        android:hint="Email"
-        android:inputType="textEmailAddress" />
+        android:hint="Phone" />
 
-    <LinearLayout
+    <Button
+        android:id="@+id/addButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:text="Add Contact" />
 
-        <Button
-            android:id="@+id/buttonSave"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="2dp"
-            android:layout_weight="1"
-            android:onClick="onSave"
-            android:text="Save" />
-
-        <Button
-            android:id="@+id/buttonLoad"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="2dp"
-            android:layout_weight="1"
-            android:onClick="onLoad"
-            android:text="Load" />
-    </LinearLayout>
+    <Button
+        android:id="@+id/queryButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Query Contacts" />
 
     <TextView
-        android:id="@+id/textViewResult"
-        android:layout_width="wrap_content"
+        android:id="@+id/resultTextView"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="" />
+        android:text="Results will appear here" />
 </LinearLayout>

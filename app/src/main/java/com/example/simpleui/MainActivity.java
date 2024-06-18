@@ -1,6 +1,9 @@
 package com.example.simpleui;
 
-import android.content.SharedPreferences;
+import android.annotation.SuppressLint;
+import android.content.ContentValues;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -14,14 +17,10 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 public class MainActivity extends AppCompatActivity {
-    private static final String SHARED_PREFS = "sharedPrefs";
-    private static final String NAME_KEY = "name";
-    private static final String EMAIL_KEY = "email";
-    EditText editTextName;
-    EditText editTextEmail;
-    private Button buttonSave;
-    private Button buttonLoad;
-    private TextView textViewResult;
+    private EditText nameEditText, phoneEditText;
+    private TextView resultTextView;
+
+    private Button addButton, queryButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,38 +28,65 @@ public class MainActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v,
-                                                                            insets) -> {
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main
+        ), (v, insets) -> {
             Insets systemBars =
                     insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top,
                     systemBars.right, systemBars.bottom);
             return insets;
         });
-        editTextName = findViewById(R.id.editTextName);
-        editTextEmail = findViewById(R.id.editTextEmail);
-        buttonSave = findViewById(R.id.buttonSave);
-        buttonLoad = findViewById(R.id.buttonLoad);
-        textViewResult = findViewById(R.id.textViewResult);
+        nameEditText = findViewById(R.id.nameEditText);
+        phoneEditText = findViewById(R.id.phoneEditText);
+        resultTextView = findViewById(R.id.resultTextView);
+        addButton = findViewById(R.id.addButton);
+        queryButton = findViewById(R.id.queryButton);
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addContact();
+            }
+        });
+        queryButton.setOnClickListener(new
+                                               View.OnClickListener() {
+                                                   @Override
+                                                   public void onClick(View v) {
+                                                       queryContacts();
+                                                   }
+                                               });
     }
 
-    // Save name and email to Shared Preferences
-    public void onSave(View view) {
-        SharedPreferences sharedPreferences =
-                getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(NAME_KEY, editTextName.getText().toString());
-        editor.putString(EMAIL_KEY,
-                editTextEmail.getText().toString());
-        editor.apply();
+    private void addContact() {
+        String name = nameEditText.getText().toString();
+        String phone = phoneEditText.getText().toString();
+        ContentValues values = new ContentValues();
+        values.put(DBHelper.COLUMN_NAME, name);
+        values.put(DBHelper.COLUMN_PHONE, phone);
+
+        Uri newUri =
+                getContentResolver().insert(ContactsProvider.CONTENT_URI,
+                        values);
+        resultTextView.setText("Added Contact: " +
+                newUri.toString());
     }
 
-    // Get name and email from Shared Preferences
-    public void onLoad(View view) {
-        SharedPreferences sharedPreferences =
-                getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-        String name = sharedPreferences.getString(NAME_KEY, "");
-        String email = sharedPreferences.getString(EMAIL_KEY, "");
-        textViewResult.setText("Name: " + name + "\nEmail: " + email);
+    private void queryContacts() {
+        Cursor cursor =
+                getContentResolver().query(ContactsProvider.CONTENT_URI, null,
+                        null, null, null);
+        if (cursor != null) {
+            resultTextView.setText("");
+            while (cursor.moveToNext()) {
+                @SuppressLint("Range") int id =
+                        cursor.getInt(cursor.getColumnIndex(DBHelper.COLUMN_ID));
+                @SuppressLint("Range") String name =
+                        cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_NAME));
+                @SuppressLint("Range") String phone =
+                        cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_PHONE));
+                resultTextView.append("ID: " + id + ", Name: " +
+                        name + ", Phone: " + phone + "\n");
+            }
+            cursor.close();
+        }
     }
 }

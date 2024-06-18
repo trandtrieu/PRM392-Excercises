@@ -17,9 +17,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme1"
         tools:targetApi="31">
+        <provider
+            android:name=".ContactsProvider"
+            android:authorities="com.example.contentproviderexample.provider"
+            android:enabled="true"
+            android:exported="true"></provider>
+      
+
         <activity
             android:name=".SimpleCalculator"
-
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -29,7 +35,6 @@
         </activity>
         <activity
             android:name=".SimpleCalculator1"
-
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -40,7 +45,6 @@
         <activity
             android:name=".MainActivity"
             android:exported="true"
-
             android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -51,7 +55,6 @@
         <activity
             android:name=".AddCourseActivity"
             android:exported="true"
-
             android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -62,7 +65,6 @@
         <activity
             android:name=".UpdateCourseActivity"
             android:exported="true"
-
             android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -72,7 +74,6 @@
         </activity>
         <activity
             android:name=".MainActivity2"
-
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -82,7 +83,6 @@
         </activity>
         <activity
             android:name=".MainActivity1"
-
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -99,7 +99,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
     </application>
 
 </manifest>

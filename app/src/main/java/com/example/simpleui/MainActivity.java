@@ -1,9 +1,9 @@
 package com.example.simpleui;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,7 +12,8 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 public class MainActivity extends AppCompatActivity {
-    Button buttonStart, buttonStop;
+    private ImageView imageView;
+    private Button downloadButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,27 +27,17 @@ public class MainActivity extends AppCompatActivity {
                     systemBars.right, systemBars.bottom);
             return insets;
         });
-        buttonStart = findViewById(R.id.buttonStart);
-        buttonStop = findViewById(R.id.buttonStop);
-        buttonStart.setOnClickListener(new
-                                               View.OnClickListener() {
-                                                   @Override
-                                                   public void onClick(View v) {
-                                                       Intent startIntent = new
-                                                               Intent(MainActivity.this, MyService.class);
-                                                       startIntent.setAction("START");
-                                                       startService(startIntent);
-                                                   }
-                                               });
-        buttonStop.setOnClickListener(new
-                                              View.OnClickListener() {
-                                                  @Override
-                                                  public void onClick(View v) {
-                                                      Intent stopIntent = new
-                                                              Intent(MainActivity.this, MyService.class);
-                                                      stopIntent.setAction("STOP");
-                                                      startService(stopIntent);
-                                                  }
-                                              });
+        imageView = findViewById(R.id.imageView);
+        downloadButton = findViewById(R.id.downloadButton);
+        downloadButton.setOnClickListener(new
+                                                  View.OnClickListener() {
+                                                      @Override
+                                                      public void onClick(View v) {
+                                                          String imageUrl =
+                                                                  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQykUKbHv4ruhdGJFoibGSHsTobb4-fVfXUkw&s";
+                                                          new
+                                                                  ImageDownloader(imageView).downloadImage(imageUrl);
+                                                      }
+                                                  });
     }
 }

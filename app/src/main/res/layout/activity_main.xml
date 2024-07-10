@@ -6,20 +6,19 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <Button
-        android:id="@+id/buttonStart"
+    <ImageView
+        android:id="@+id/imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="200dp"
-        android:text="Start Service" />
+        android:layout_centerInParent="true"
+        android:contentDescription="Image View" />
 
     <Button
-        android:id="@+id/buttonStop"
+        android:id="@+id/downloadButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@id/imageView"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:text="Stop Service" />6
+        android:layout_marginTop="20dp"
+        android:text="Download Image" />
 </RelativeLayout>

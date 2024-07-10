@@ -26,6 +26,10 @@
             android:enabled="true"
             android:exported="true"></provider>
 
+        <service
+            android:name=".MyService"
+            android:enabled="true"
+            android:exported="true"></service>
 
         <activity
             android:name=".SimpleCalculator"
